@@ -69,3 +69,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 //     Route::get('/home', [HomeController::class, 'index'])->name('home');
 //     Route::resource('/articles', ArticleController::class);
 // });
+
+Route::get('/test', [ContactController::class, 'test']);
+Route::get('/test_js01', [ContactController::class, 'test_js01']);
+Route::get('/test_js02', [ContactController::class, 'test_js02']);

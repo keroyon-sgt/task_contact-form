@@ -101,6 +101,8 @@ class ContactController extends Controller
 
 
         $pagination = true;
+        // $modal_count = 0;
+
         $categories = Category::all();
         // $categories = array( array('id'=>'1', 'category'=>'dummy'));
 
@@ -165,5 +167,10 @@ class ContactController extends Controller
 
         return view('admin', compact('contacts', 'category_list', 'categories', 'pagination'));
     }
+
+    public function test(){ return view('test'); }
+    public function test_js01(){ return view('test_js01'); }
+    public function test_js02(){ return view('test_js02'); }
+
 
 }
