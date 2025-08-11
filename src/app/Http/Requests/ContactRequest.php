@@ -37,6 +37,7 @@ class ContactRequest extends FormRequest
             'building' => ['string', 'max:255','nullable'],
             'category_id' => ['required', 'integer'],
             'detail' => ['required', 'string'],//new MaxWordCountValidation(255)
+            // 'correct' => ['present'],
         ];
     }
 
@@ -73,6 +74,8 @@ class ContactRequest extends FormRequest
             'category_id.required' => 'お問い合わせの種類を選択してください',
             'detail.required' => 'お問い合わせ内容を入力してください',
             'detail.max' => 'お問合せ内容は120文字以内で入力してください',
+            // 'correct.required' => '(´ᴖωᴖ｀)',
+            // 'correct.present' => '( ≖ᴗ≖​)',
         ];
     }
 }

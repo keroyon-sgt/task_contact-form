@@ -12,4 +12,9 @@ class Category extends Model
     protected $fillable = [
         'content'
     ];
+
+    public function getCategory(){
+        return 'ID'.$this->id . ':' . $this->content;
+    }
+
 }

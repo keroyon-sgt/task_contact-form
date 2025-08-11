@@ -24,9 +24,12 @@ class RegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255'],
-            'tel' => ['required', 'numeric', 'digits_between:10,11'],
+            // 'name' => ['required', 'string', 'max:255'],
+            // 'email' => ['required', 'string', 'email', 'max:255'],
+            // 'tel' => ['required', 'numeric', 'digits_between:10,11'],
+            // 'password' => ['required', 'string', 'max:255'],
+            'name' => ['required'],
+            'email' => ['required'],
             'password' => ['required', 'string', 'max:255'],
         ];
     }
@@ -35,15 +38,15 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name.required' => 'お名前を入力してください',
-            'name.string' => '名前は文字列で入力してください',
-            'name.max' => '名前は255文字以下で入力してください',
+            // 'name.string' => '名前は文字列で入力してください',
+            // 'name.max' => '名前は255文字以下で入力してください',
             'email.required' => 'メールアドレスを入力してください',
-            'email.string' => 'メールアドレスは文字列で入力してください',
+            // 'email.string' => 'メールアドレスは文字列で入力してください',
             'email.email' => 'メールアドレスは「ユーザー名@ドメイン」形式で入力してください',
-            'email.max' => 'メールアドレスは255文字以下で入力してください',
+            // 'email.max' => 'メールアドレスは255文字以下で入力してください',
             'password.required' => 'パスワードを入力してください',
-            'password.string' => 'パスワードは文字列で入力してください',
-            'password.max' => 'パスワードは255文字以下で入力してください',
+            // 'password.string' => 'パスワードは文字列で入力してください',
+            // 'password.max' => 'パスワードは255文字以下で入力してください',
         ];
     }
 }
