@@ -35,7 +35,10 @@ class Contact extends Model
     public function scopeKeywordSearch($query, $keyword)
     {
         if (!empty($keyword)) {
-            $query->where('detail', 'like', '%' . $keyword . '%');
+            $query->where('detail', 'LIKE', '%'.$keyword.'%')
+                ->orWhere('email', 'LIKE', '%'.$keyword.'%')
+                ->orWhere('last_name', 'LIKE', '%'.$keyword.'%')
+                ->orWhere('first_name', 'LIKE', '%'.$keyword.'%');
         }
     }
 
@@ -43,6 +46,12 @@ class Contact extends Model
     {
         if (!empty($gender)) {
             $query->where('gender', $gender);
+        }
+    }
+    public function scopeDateSearch($query, $created_at)
+    {
+        if (!empty($created_at)) {
+            $query->where('created_at', 'LIKE', $created_at.'%');
         }
     }
 }

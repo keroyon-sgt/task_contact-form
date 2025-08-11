@@ -153,10 +153,10 @@
                     <div class="form__input--text">
                         <!-- <input type="text" name="category" placeholder="test@example.com" value="{{ old('category_id') }}" /> -->
                         <select class="create-form__item-select" name="category_id">
-
+<!-- 
 @if(!old('category_id'))
                         <option value="0" disabled >選択してください</option>
-@endif
+@endif -->
 @foreach ($categories as $category)
 @if(null != old('category_id') && $category['id'] == old('category_id'))
                         <option value="{{$category['id']}}" selected>{{$category['content']}}</option>

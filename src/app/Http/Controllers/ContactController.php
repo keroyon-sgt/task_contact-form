@@ -16,18 +16,7 @@ class ContactController extends Controller
     public function index()
     {
 
-        // $contacts = Contact::with('category')->get();
-        // $contacts = Contact::with('category')->CategorySearch($request->category_id)->KeywordSearch($request->keyword)->get();
-        // $contacts = Contact::with('category')->CategorySearch($request->category_id)->get();
         $categories = Category::all();
-
-        // $categories = array( array('id'=>'1', 'category'=>'dummy'));
-
-// echo '<br />contacts';
-// var_dump($contacts);
-// // echo '<br />categories = ';
-// // var_dump($categories);
-// exit;
 
         return view('index', compact('categories'));    //'contacts', 
     }
@@ -93,10 +82,6 @@ class ContactController extends Controller
     public function admin(Request $request)
     {
 
-        // $contacts = Contact::with('category')->CategorySearch($request->category_id)->KeywordSearch($request->keyword)->get();
-        // $contacts  = array(array('id'=>'5', 'category'=> array('id'=>'1', 'category'=>'dummy'),'content' =>'なかみ中身'));
-        // $contacts = Contact::all();
-
         $contacts = Contact::paginate(7);
 
 
@@ -104,22 +89,11 @@ class ContactController extends Controller
         // $modal_count = 0;
 
         $categories = Category::all();
-        // $categories = array( array('id'=>'1', 'category'=>'dummy'));
 
         $category_list=array();
         foreach($categories as $category){
             $category_list += array($category['id']=>$category['content']);
         }
-
-// echo '<br />contacts';
-// var_dump($contacts);
-// echo '<br />categories = ';
-// var_dump($categories);
-
-// echo '<br />contacts[0][content]';
-// var_dump($contacts[0]['content']);
-// echo '<br />categories';
-// var_dump($categories);
 
         return view('admin', compact('contacts', 'category_list', 'categories', 'pagination'));//, 'categories'
     }
@@ -146,17 +120,82 @@ class ContactController extends Controller
     public function search(Request $request)
     {
         
-        $contacts = Contact::with('category')->CategorySearch($request->category_id)->GenderSearch($request->gender)->KeywordSearch($request->keyword)->get();
+        $contacts = Contact::with('category')
+        // $contacts = Contact::query()
+            ->CategorySearch($request->category_id)
+            ->DateSearch($request->created_at)
+            ->GenderSearch($request->gender)
+            ->KeywordSearch($request->keyword)
+            ->get();
+        
+        // $contacts = $contacts->paginate(7)->withQueryString();
+// echo '<br />contacts = ';
+// var_dump($contacts);
 
-        // $contacts = $contacts->paginate(7)->sortByDesc('created_at');
+        $query = Contact::query();
+        if ($value = $request->category_id) {
+            $query->where('category_id', $value);
+
+// echo '<br /><br />value(category_id) = ';
+// var_dump($value);
+// echo '<br /><br />query = ';
+// var_dump($query);
+
+        }
+        if ($value = $request->gender) {
+            $query->where('gender', $value);
+
+// echo '<br /><br />value(g) = ';
+// var_dump($value);
+// echo '<br /><br />query = ';
+// var_dump($query);
+
+        }
+        if ($value = $request->created_at) {
+            $query->where('created_at', $value.'%');
+
+// echo '<br /><br />value(c) = ';
+// var_dump($value);
+// echo '<br /><br />query = ';
+// var_dump($query);
+
+        }
+        if ($value = $request->keyword) {
+            $query->where('email', 'LIKE', "%{$value}%")
+                ->orWhere('detail', 'LIKE', "%{$value}%")
+                ->orWhere('email', 'LIKE', "%{$value}%")
+                ->orWhere('last_name', 'LIKE', "%{$value}%")
+                ->orWhere('first_name', 'LIKE', "%{$value}%");
+
+// echo '<br /><br />value(k) = ';
+// var_dump($value);
+// echo '<br /><br />query = ';
+// var_dump($query);
+
+
+        }
+        $contacts = $query->paginate(7)->withQueryString();
+
+// echo '<br /><br />category_id = ';
+// var_dump($request->category_id);
+// echo '<br /><br />gender = ';
+// var_dump($request->gender);
+// echo '<br /><br />created_at = ';
+// var_dump($request->created_at);
+// echo '<br /><br />keyword = ';
+// var_dump($request->keyword);
+
+// echo '<br /><br />contacts = ';
+// var_dump($contacts);
+// exit;
 
         $categories = Category::all();
-        $pagination=false;
 
         $category_list=array();
         foreach($categories as $category){
             $category_list += array($category['id']=>$category['content']);
         }
+
 
 
 // echo '<br />categories';
@@ -165,7 +204,7 @@ class ContactController extends Controller
 // var_dump($category_list);
 // exit;
 
-        return view('admin', compact('contacts', 'category_list', 'categories', 'pagination'));
+        return view('admin', compact('contacts', 'category_list', 'request'));//, 'categories'
     }
 
     public function test(){ return view('test'); }

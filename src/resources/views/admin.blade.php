@@ -42,7 +42,6 @@ $(function () {
     </div>
     @endif
 </div>
-
     <div class="contact__content">
         <div class="section__title">
             <h2>contact検索</h2>
@@ -50,22 +49,22 @@ $(function () {
         <form class="search-form" action="/admin/search" method="get">
             @csrf
             <div class="search-form__item">
-                <input class="search-form__item-input" type="text" name="keyword" value="{{ old('keyword') }}" placeholder="名前やメールアドレスを入力してください"  />
+                <input class="search-form__item-input" type="text" name="keyword" value="{{ $request->keyword }}" placeholder="名前やメールアドレスを入力してください"  />
 
                 <select class="search-form__item-select" name="gender">
                     <option value="" disabled selected>性別</option>
                     <option value="1"
-@if(old('gender')==1)
+@if($request->gender==1)
  selected
 @endif
 >男性</option>
                     <option value="2"
-@if(old('gender')==2)
+@if($request->gender==2)
  selected
 @endif
                     >女性</option>
                     <option value="3"
-@if(old('gender')==3)
+@if($request->gender==3)
  selected
 @endif
                     >その他</option>
@@ -74,11 +73,15 @@ $(function () {
                 <select class="search-form__item-select" name="category_id">
                     <option value="" disabled selected>お問い合わせの種類</option>
                     @foreach ($category_list as $category_id => $category)
+@if($category_id == $request->category_id)
+                    <option value="{{$category_id}}" selected>{{$category}}</option>
+@else
                     <option value="{{$category_id}}">{{$category}}</option>
-                    @endforeach
+@endif
+@endforeach
                 </select>
 
-                <input class="search-form__date-select" type="date" name="date" value="年/月/日" />
+                <input class="search-form__date-select" type="date" name="created_at" value="@if(null == $request->created_at))年/月/日@else{{$request->created_at}}@endif" />
             </div>
             <div class="search-form__button">
                 <button class="search-form__button-submit" type="submit">検索</button>
@@ -92,13 +95,7 @@ $(function () {
 <!-- エクスポート -->
         <div>
             <div class="export__button"><button class="search-form__button-submit" value="export">エクスポート</button></div>
-
-            @if($pagination)
-                <!-- <div class="pagination">{{ $contacts->links('vendor.pagination.bootstrap-4') }}</div> -->
-                <div class="pagination">{{ $contacts->links() }}</div>
-            @endif
-
-
+            <div class="pagination">{{ $contacts->links() }}</div>
         </div>
 
 <!-- ------------------------------------------------- -->
@@ -235,8 +232,18 @@ $(function () {
 // var_dump($category_list);
 ?>
 <!-- @endforeach -->
-<!-- {{ $categories[ 0 ]['id'] }}
-{{ $categories[ 0 ]['content'] }} -->
+<!-- 
+old=
+{{ old('keyword') }}
+req=
+{{ $request->keyword }}
+
+<?php
+// var_dump($request->keyword);
+
+?>
+ -->
+
 
 
 @endsection
