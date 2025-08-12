@@ -1,3 +1,8 @@
+main{
+    background-color: #f2ece7;
+    height: 100%;
+}
+
 .login-form__content {
     margin: 0 auto;
     padding: 30px 15px;
@@ -11,8 +16,12 @@
 
 .form {
     margin: 0 auto;
-    width: 25%;
+    padding: 8% 8%;
+    width: 50%;
     text-align: center;
+    background-color: #fff;
+    border: 1px solid #d6c6b6;
+    border-radius: 3px;
 }
 
 .form__group {
@@ -33,7 +42,8 @@
     padding: 10px;
     width: 100%;
     height: 40px;
-    border: 1px solid #ddd;
+    border: 1px solid #efefef;
+    background-color: #efefef;
     border-radius: 3px;
 
     appearance: none;
@@ -44,12 +54,12 @@
 }
 
 .form__button-submit {
-    padding: 10px;
+    padding: 5px;
     width: 30%;
-    height: 50px;
+    height: 30px;
     border: none;
-    border-radius: 3px;
-    background: #000;
+    border-radius: 1px;
+    background: #8b7968;
     color: #fff;
     cursor: pointer;
 }

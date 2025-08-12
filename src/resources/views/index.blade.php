@@ -1,24 +1,24 @@
 @extends('layouts.app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/index.css') }}">
+<link rel="stylesheet" href="{{ asset('css/index.css') }}?d={{str_pad(rand(0,99999999),8,0, STR_PAD_LEFT)}}">
 @endsection
 
 @section('content')
 
         <div class="contact-form__content">
             <div class="contact-form__heading">
-                <h2>お問い合わせ</h2>
+                <h2>Contact</h2>
             </div>
         <form class="form" action="/confirm" method="post">
             @csrf
             <div class="form__group">
                 <div class="form__group-title">
                     <span class="form__label--item">お名前</span>
-                    <span class="form__label--required">必須</span>
+                    <span class="form__label--required">※</span>
                 </div>
                 <div class="form__group-content">
-                    <div class="form__input--text">
+                    <div class="form__input--text-name">
                         <input type="text" name="last_name" placeholder="例：山田" value="{{ old('last_name') }}" />
                         <input type="text" name="first_name" placeholder="例：太郎" value="{{ old('first_name') }}" />
                     </div>
@@ -35,7 +35,7 @@
             <div class="form__group">
                 <div class="form__group-title">
                     <span class="form__label--item">性別</span>
-                    <span class="form__label--required">必須</span>
+                    <span class="form__label--required">※</span>
                 </div>
                 <div class="form__group-content">
                     <div class="form__input--radio">
@@ -68,7 +68,7 @@
             <div class="form__group">
                 <div class="form__group-title">
                     <span class="form__label--item">メールアドレス</span>
-                    <span class="form__label--required">必須</span>
+                    <span class="form__label--required">※</span>
                 </div>
                 <div class="form__group-content">
                     <div class="form__input--text">
@@ -84,12 +84,14 @@
             <div class="form__group">
                 <div class="form__group-title">
                     <span class="form__label--item">電話番号</span>
-                    <span class="form__label--required">必須</span>
+                    <span class="form__label--required">※</span>
                 </div>
                 <div class="form__group-content">
-                    <div class="form__input--text">
+                    <div class="form__input--text-tel">
                         <input type="tel" name="tel-1" placeholder="080" value="{{ old('tel-1') }}" /><!--inputに桁数制限-->
+                        <span>-</span>
                         <input type="tel" name="tel-2" placeholder="1234" value="{{ old('tel-2') }}" />
+                        <span>-</span>
                         <input type="tel" name="tel-3" placeholder="5678" value="{{ old('tel-3') }}" />
                     </div>
                     <div class="form__error">
@@ -112,7 +114,7 @@
             <div class="form__group">
                 <div class="form__group-title">
                     <span class="form__label--item">住所</span>
-                    <span class="form__label--required">必須</span>
+                    <span class="form__label--required">※</span>
                 </div>
                 <div class="form__group-content">
                     <div class="form__input--text">
@@ -147,16 +149,16 @@
             <div class="form__group">
                 <div class="form__group-title">
                     <span class="form__label--item">お問い合わせの種類  </span>
-                    <span class="form__label--required">必須</span>
+                    <span class="form__label--required">※</span>
                 </div>
                 <div class="form__group-content">
-                    <div class="form__input--text">
+                    <div class="form__select-category">
                         <!-- <input type="text" name="category" placeholder="test@example.com" value="{{ old('category_id') }}" /> -->
-                        <select class="create-form__item-select" name="category_id">
-<!-- 
+                        <select class="form__item-select" name="category_id">
+
 @if(!old('category_id'))
-                        <option value="0" disabled >選択してください</option>
-@endif -->
+                        <option value="0" disabled selected>選択してください</option>
+@endif
 @foreach ($categories as $category)
 @if(null != old('category_id') && $category['id'] == old('category_id'))
                         <option value="{{$category['id']}}" selected>{{$category['content']}}</option>

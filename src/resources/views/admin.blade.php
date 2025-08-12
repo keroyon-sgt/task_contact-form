@@ -44,17 +44,18 @@ $(function () {
 </div>
     <div class="contact__content">
         <div class="section__title">
-            <h2>contact検索</h2>
+            <h2>Admin</h2>
         </div>
+    <div class="search-form__box">
         <form class="search-form" action="/admin/search" method="get">
             @csrf
-            <div class="search-form__item">
+<!-- <div class="search-form__item"> -->
                 <input class="search-form__item-input" type="text" name="keyword" value="{{ $request->keyword }}" placeholder="名前やメールアドレスを入力してください"  />
-
+<!-- </div><div class="search-form__item"> -->
                 <select class="search-form__item-select" name="gender">
-                    <option value="" disabled selected>性別</option>
+                    <option value="">性別</option>
                     <option value="1"
-@if($request->gender==1)
+@if($request->gender==1||null == $request->gender)
  selected
 @endif
 >男性</option>
@@ -69,7 +70,7 @@ $(function () {
 @endif
                     >その他</option>
                 </select>
-
+<!-- </div><div class="search-form__item"> -->
                 <select class="search-form__item-select" name="category_id">
                     <option value="" disabled selected>お問い合わせの種類</option>
                     @foreach ($category_list as $category_id => $category)
@@ -80,49 +81,54 @@ $(function () {
 @endif
 @endforeach
                 </select>
-
+<!-- </div><div class="search-form__item"> -->
                 <input class="search-form__date-select" type="date" name="created_at" value="@if(null == $request->created_at))年/月/日@else{{$request->created_at}}@endif" />
-            </div>
+<!-- </div><div class="search-form__item"> -->
             <div class="search-form__button">
                 <button class="search-form__button-submit" type="submit">検索</button>
             </div>
+<!-- </div> -->
         </form>
-            <div class="search-form__button">
-                <button class="search-form__button-submit"  onclick=location.href="/admin">リセット</button>
-            </div>
+        <div class="search-form__button">
+            <button class="search-form__button-reset"  onclick=location.href="/admin">リセット</button>
+        </div>
+    </div>
 
 <!-- ------------------------------------------------- -->
 <!-- エクスポート -->
-        <div>
-            <div class="export__button"><button class="search-form__button-submit" value="export">エクスポート</button></div>
+        <div class="search-form__box">
+            <div class="export__button"><button class="search-form__button-export" value="export">エクスポート</button></div>
             <div class="pagination">{{ $contacts->links() }}</div>
         </div>
 
 <!-- ------------------------------------------------- -->
-   <div id="overlay" class="overlay"></div>
+    <div id="overlay" class="overlay"></div>
+
+<!-- ------------------------------------------------- -->
+
     <div class="contact-table">
         <table class="contact-table__inner">
         <tr class="contact-table__row">
-            <th class="contact-table__header">お名前</th>
-            <th class="contact-table__header">性別</th>
-            <th class="contact-table__header">メールアドレス</th>
-            <th class="contact-table__header">お問い合わせの種類</th>
+            <th class="contact-table__header" style="width:15%">お名前</th>
+            <th class="contact-table__header" style="width:10%">性別</th>
+            <th class="contact-table__header" style="width:25%">メールアドレス</th>
+            <th class="contact-table__header" style="width:25%">お問い合わせの種類</th>
             <!-- <th class="contact-table__header">お問い合わせの内容</th> -->
-            <th class="contact-table__header"></th>
+            <th class="contact-table__header" style="width:15%"></th>
         </tr>
 <?php $modal_count=0 ?>
         @foreach ($contacts as $contact)
 <?php $modal_count++ ?>
         <tr class="contact-table__row">
             <td class="contact-table__item">
-                {{ $contact['last_name'] }}&nbsp;&nbsp;
+                {{ $contact['last_name'] }}&nbsp;
                 {{ $contact['first_name'] }}
             </td>
             <td class="contact-table__item">
 {{$contact['gender']==1 ? "男性" : ($contact['gender']==2? "女性" :"その他") }}
             </td>
 
-            <td class="contact-table__item">
+            <td class="contact-table__item contact-table__item-email">
                 {{ $contact['email'] }}
             </td>
 
@@ -130,9 +136,8 @@ $(function () {
                 {{ $category_list[ $contact['category_id'] ] }}
             </td>
             <td class="contact-table__item">
-                <div class="delete-form__button">
-                <button class="delete-form__button-submit js-open button-open"  data-id="{{$modal_count}}">詳細</button>
-                {{$modal_count}}
+                <div class="detail-panel__button">
+                <button class="detail-panel__button-open js-open button-open"  data-id="{{$modal_count}}">詳細</button>
                 </div>
             </td>
         </tr>
@@ -140,22 +145,24 @@ $(function () {
         </table>
     </div>
 
+
+    <!-- ------------------------------------------------- -->
+
 <?php $modal_count=0 ?>
+
 @foreach ($contacts as $contact)
 <?php $modal_count++ ?>
 <div class="modal-window" data-id="modal{{$modal_count}}">
     <div class="modal-close__button">
-        <button class="delete-form__button-submit js-close button-cose"  data-id="{{$modal_count}}">✖</button>
-                    {{$modal_count}}
+        <button class="modal-close__button-submit js-close button-close"  data-id="{{$modal_count}}">✖</button>
 
     </div>
     <div class="modal-table">
-        {{$modal_count}}
         <table class="modal-table__inner">
             <tr class="modal-table__row">
                 <th class="modal-table__header">お名前</th>
                 <td class="modal-table__item">
-                    {{ $contact['last_name'] }}&nbsp;&nbsp;
+                    {{ $contact['last_name'] }}&nbsp;
                     {{ $contact['first_name'] }}
                 </td>
             </tr>
@@ -178,20 +185,19 @@ $(function () {
                 </td>
             </tr>
             <tr class="modal-table__row">
-                <th class="contact-table__header">お問い合わせの内容</th>
+                <th class="modal-table__header">お問い合わせの内容</th>
                 <td class="modal-table__item">
                     {{ $contact['detail'] }}
                 </td>
             </tr>
             <tr class="modal-table__row">
                 <td class="modal-table__item" colspan="2">
-                    <form class="delete-form" action="/categories/delete" method="post">
+                    <form class="delete-form" action="/admin/delete" method="post">
                         @method('DELETE')
                         @csrf
                         <div class="delete-form__button">
                             <input type="hidden" name="id" value="{{ $contact['id'] }}">
                             <button class="delete-form__button-submit" type="submit">削除</button>
-                            {{ $contact['id'] }}
                         </div>
                     </form>
                 </td>
@@ -244,6 +250,10 @@ req=
 ?>
  -->
 
+<?php
+echo'<br />Auth check =';
+var_dump(Auth::check());
+?>
 
 
 @endsection

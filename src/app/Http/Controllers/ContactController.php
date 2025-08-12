@@ -77,7 +77,12 @@ class ContactController extends Controller
         Contact::create($contact);
         return view('thanks');
     }
+    public function destroy(Request $request)
+    {
+        Contact::find($request->id)->delete();
 
+        return redirect('/admin');//->with('message', 'お問い合わせを削除しました');
+    }
 
     public function admin(Request $request)
     {
@@ -95,7 +100,7 @@ class ContactController extends Controller
             $category_list += array($category['id']=>$category['content']);
         }
 
-        return view('admin', compact('contacts', 'category_list', 'categories', 'pagination'));//, 'categories'
+        return view('admin', compact('contacts', 'category_list', 'categories', 'pagination', 'request'));//, 'categories'
     }
 
     // public function category()

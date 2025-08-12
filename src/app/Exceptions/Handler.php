@@ -37,5 +37,14 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+
+         $this->renderable(function (\Exception $e, $request) {
+            // 419エラー: CSRFトークンミスマッチエラーの場合の処理
+            if ($e->getPrevious() instanceof TokenMismatchException) {
+                return redirect()->route('auth.login')->withErrors([
+                    'errors' => trans('auth.csrf_token_mismatched')
+                ]);
+            };
+        });
     }
 }

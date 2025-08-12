@@ -30,6 +30,7 @@ Route::post('/contacts', [ContactController::class, 'store']);
 // Route::post('/admin', [ContactController::class, 'admin']);
 Route::get('/admin', [ContactController::class, 'admin']);
 Route::get('/admin/search', [ContactController::class, 'search']);//->name('search')
+Route::delete('/admin/delete', [ContactController::class, 'destroy']);
 
 // Route::middleware('auth')->group(function () {
 //     Route::get('/admin', [AuthController::class, 'index']);//->name('login')
@@ -41,6 +42,7 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::get('/login', [AuthController::class, 'login_view']);
 // Route::post('/login', [AuthController::class, 'login_view'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
 

@@ -16,34 +16,24 @@
         <div class="header__inner">
             <div class="header-utilities">
                 <a class="header__logo" href="/">
-                Contact Form
+                FashionablyLate
                 </a>
                 <nav>
                     <ul class="header-nav">
                         @if (Auth::check())
-                        <li class="header-nav__item">
-                            <a class="header-nav__link" href="/mypage">マイページ</a>
-                        </li>
                         <li class="header-nav__item">
                             <form class="form" action="/logout" method="post">
                                 @csrf
                                 <button class="header-nav__button">logout</button>
                             </form>
                         </li>
+                        @elseif(Request::is('login'))
+                        <li class="header-nav__item">
+                            <button class="header-nav__button" onclick="location.href='/register'">register</button>
+                        </li>
                         @else
                         <li class="header-nav__item">
-                            <form class="form" action="/login" method="post">
-                                @csrf
-                                <button class="header-nav__button">login</button>
-                            </form>
-                        </li>
-                        <li class="header-nav__item">
-                            <a class="header__logo" href="/login">LOGIN</a>
-                        </li>
-                        <li class="header-nav__item">
-                            <form class="form" action="/login" method="post">
-                                <button class="header-nav__button">login</button>
-                            </form>
+                            <button class="header-nav__button" onclick="location.href='/login'">login</button>
                         </li>
                         @endif
                     </ul>
@@ -55,6 +45,23 @@
         </div>
 
     </header>
+
+<div class="contact__alert">
+    @if(session('message'))
+    <div class="contact__alert--success">
+        {{ session('message') }}
+    </div>
+    @endif
+    @if ($errors->any())
+    <div class="contact__alert--danger">
+        <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+        </ul>
+    </div>
+    @endif
+</div>
 
 <!-- 
 <div class="contact__alert">
