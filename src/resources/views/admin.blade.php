@@ -49,9 +49,9 @@ $(function () {
     <div class="search-form__box">
         <form class="search-form" action="/admin/search" method="get">
             @csrf
-<!-- <div class="search-form__item"> -->
+<div class="search-form__item-text">
                 <input class="search-form__item-input" type="text" name="keyword" value="{{ $request->keyword }}" placeholder="名前やメールアドレスを入力してください"  />
-<!-- </div><div class="search-form__item"> -->
+</div><div class="search-form__item-selection">
                 <select class="search-form__item-select" name="gender">
                     <option value="">性別</option>
                     <option value="1"
@@ -70,7 +70,7 @@ $(function () {
 @endif
                     >その他</option>
                 </select>
-<!-- </div><div class="search-form__item"> -->
+</div><div class="search-form__item-selection">
                 <select class="search-form__item-select" name="category_id">
                     <option value="" disabled selected>お問い合わせの種類</option>
                     @foreach ($category_list as $category_id => $category)
@@ -81,13 +81,13 @@ $(function () {
 @endif
 @endforeach
                 </select>
-<!-- </div><div class="search-form__item"> -->
+</div><div class="search-form__item-date">
                 <input class="search-form__date-select" type="date" name="created_at" value="@if(null == $request->created_at))年/月/日@else{{$request->created_at}}@endif" />
-<!-- </div><div class="search-form__item"> -->
+</div><div class="search-form__item">
             <div class="search-form__button">
                 <button class="search-form__button-submit" type="submit">検索</button>
             </div>
-<!-- </div> -->
+</div>
         </form>
         <div class="search-form__button">
             <button class="search-form__button-reset"  onclick=location.href="/admin">リセット</button>
