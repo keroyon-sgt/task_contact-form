@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Pagination\Paginator;
 use Illuminate\Http\Request;
-use App\Models\Contact;
 use App\Http\Requests\ContactRequest;
+use App\Models\Contact;
 use App\Models\Category;
 
 // use Illuminate\Database\Eloquent\Collection;
@@ -77,6 +77,7 @@ class ContactController extends Controller
         Contact::create($contact);
         return view('thanks');
     }
+
     public function destroy(Request $request)
     {
         Contact::find($request->id)->delete();
@@ -90,9 +91,6 @@ class ContactController extends Controller
         $contacts = Contact::paginate(7);
 
 
-        $pagination = true;
-        // $modal_count = 0;
-
         $categories = Category::all();
 
         $category_list=array();
@@ -100,7 +98,9 @@ class ContactController extends Controller
             $category_list += array($category['id']=>$category['content']);
         }
 
-        return view('admin', compact('contacts', 'category_list', 'categories', 'pagination', 'request'));//, 'categories'
+        $form_action = '/export';
+
+        return view('admin', compact('contacts', 'category_list', 'categories', 'request', 'form_action'));
     }
 
     // public function category()
@@ -201,7 +201,7 @@ class ContactController extends Controller
             $category_list += array($category['id']=>$category['content']);
         }
 
-
+        $form_action = '/export/search';
 
 // echo '<br />categories';
 // var_dump($categories);
@@ -209,12 +209,14 @@ class ContactController extends Controller
 // var_dump($category_list);
 // exit;
 
-        return view('admin', compact('contacts', 'category_list', 'request'));//, 'categories'
+        return view('admin', compact('contacts', 'category_list', 'request', 'form_action'));
     }
 
     public function test(){ return view('test'); }
     public function test_js01(){ return view('test_js01'); }
     public function test_js02(){ return view('test_js02'); }
+
+    public function thanks(){ return view('thanks'); }
 
 
 }

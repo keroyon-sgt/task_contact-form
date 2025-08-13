@@ -52,7 +52,7 @@
         {{ session('message') }}
     </div>
     @endif
-    @if ($errors->any())
+    <!-- @if ($errors->any())
     <div class="contact__alert--danger">
         <ul>
         @foreach ($errors->all() as $error)
@@ -60,26 +60,9 @@
         @endforeach
         </ul>
     </div>
-    @endif
+    @endif -->
 </div>
 
-<!-- 
-<div class="contact__alert">
-    @if(session('message'))
-    <div class="contact__alert--success">
-        {{ session('message') }}
-    </div>
-    @endif
-    @if ($errors->any())
-    <div class="contact__alert--danger">
-        <ul>
-        @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-        </ul>
-    </div>
-    @endif
-</div> -->
 
     <main>
         @yield('content')

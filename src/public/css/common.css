@@ -60,3 +60,21 @@ body, body.main {
     background-color: #f6f6f6;
 font-family: 'Courier New', Courier, monospace;
 }
+
+.contact__alert--success {
+    padding: 10px 30px;
+    border-color: #badbcc;
+    background-color: #d1e7dd;
+    color: #0f5132;
+}
+
+.contact__alert--danger {
+    padding: 10px 0;
+    border-color: #f5c2c7;
+    background-color: #f8d7da;
+    color: #842029;
+}
+
+.contact__alert--danger ul {
+    margin: 0;
+}

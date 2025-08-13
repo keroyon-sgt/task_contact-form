@@ -15,23 +15,50 @@
 }
 
 .confirm-table {
+    margin: 30px auto;
+    text-align: left;
     border: 1px solid #ddd;
 }
 
 .confirm-table__inner {
     width: 100%;
+    table-layout: fixed;
+}
+
+.confirm-table__row {
+    /* border: 1px solid #8b7968; */
 }
 
 .confirm-table__header {
-    padding: 15px;
-    width: 20%;
-    border-bottom: 1px solid #ddd;
-    background-color: #eee;
+    padding: 15px 20px 15px 50px;
+    width: 35%;
+    text-align: left;
     font-weight: bold;
+    border-bottom: 1px solid #ddd;
+    background: #8b7968;
+    color: #fff;
 }
 
+.confirm-table__header,
+.confirm-table__item {
+    /* text-align: center; */
+}
+
+/* .confirm-table__header-span {
+    margin-right: 40%;
+} */
+/* 
+.confirm-table__item:first-of-type {
+    padding: 12px;
+    width: 90%;
+} */
+
+/* .confirm-table__item-email {
+    font-family: 'Times New Roman', Times, serif;
+} */
+
 .confirm-table__text {
-    padding: 15px;
+    padding: 16px 40px;
     border-bottom: 1px solid #ddd;
 }
 
@@ -39,12 +66,30 @@
     width: 100%;
     outline: none;
     border: none;
+    color: #8b7968;
+    font-size: 16px;
 }
 
-.confirm-table__row:last-child .confirm-table__header,
+.confirm-table__text-tel {
+    display: flex;
+    justify-content: space-between;
+    /* justify-content: space-around; */
+    line-height: 40px;
+    /* font-size: 30px; */
+}
+.confirm-table__text textarea {
+    width: 100%;
+    height: 100px;
+    outline: none;
+    border: none;
+    resize: none;
+    color: #8b7968;
+    font-size: 16px;
+}
+/* .confirm-table__row:last-child .confirm-table__header,
 .confirm-table__row:last-child .confirm-table__text {
     border-bottom-width: 0;
-}
+} */
 
 .form__button {
     margin-top: 30px;
@@ -52,12 +97,31 @@
 }
 
 .form__button-submit {
-    padding: 10px;
-    width: 30%;
-    height: 50px;
+    padding: 12px;
+    width: 90px;
+    height: 30px;
     border: none;
-    border-radius: 3px;
-    background: #000;
+    padding: 5px;
+    margin: 10px;
+    /* width: 100%; */
+    /* border: 1px solid #8b7968; */
+    /* border-radius: 3px; */
+    background: #8b7968;
     color: #fff;
+    cursor: pointer;
+}
+
+.form__button-correct {
+    padding: 12px;
+    width: 90px;
+    height: 30px;
+    border: none;
+    padding: 5px;
+    margin: 10px;
+    /* border: 1px solid #8b7968; */
+    /* border-radius: 3px; */
+    background: #fff;
+    color: #8b7968;
+    text-decoration: underline;
     cursor: pointer;
 }

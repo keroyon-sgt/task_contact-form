@@ -183,8 +183,9 @@
             <div class="form__group">
                 <div class="form__group-title">
                     <span class="form__label--item">お問い合わせ内容</span>
+                    <span class="form__label--required">※</span>
                 </div>
-                <div class="form__group-detail">
+                <div class="form__group-content">
                     <div class="form__input--textarea">
                         <textarea name="detail" placeholder="お問い合わせ内容をご記載ください" >{{ old('detail') }}</textarea>
                     </div>

@@ -2,9 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 // use Illuminate\Support\ServiceProvider;
+
 use App\Http\Controllers\ContactController;
-// use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CsvExportController;
+
 use App\Providers\FortifyServiceProvider;
 
 
@@ -45,6 +47,10 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
+Route::get('/thanks', [ContactController::class, 'thanks']);
+
+Route::get('/export', [CsvExportController::class, 'export']);
+Route::get('/export/search', [CsvExportController::class, 'search']);
 
 // Route::post('login', [AuthController::class, 'index']);
 // Route::post('/login', [AuthController::class, 'store']);

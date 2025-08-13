@@ -2,9 +2,44 @@
     margin: 0 auto;
     padding: 30px 15px;
     max-width: 1230px;
+    text-align: center;
 }
 
 .thanks__heading {
+    margin-top: 300px;
     margin-bottom: 40px;
     text-align: center;
+}
+.thanks__content::after {
+    content: 'Thank you';
+    position: absolute;
+    top: 50%;
+    /* 垂直方向の中央寄せ */
+    left: 50%;
+    /* 水平方向の中央寄せ */
+    transform: translate(-50%, -50%);
+    /* 中央に配置 */
+    font-size: 200px;
+    /* 背景テキストのフォントサイズ */
+    color: rgba(55, 47, 41, 0.05);
+    /* 背景テキストの色（透明度含む） */
+    z-index: -1;
+    /* 背景として配置 */
+    white-space: nowrap;
+    /* テキストの折り返し防止 */
+}
+
+.thanks__content button {
+    padding: 12px;
+    width: 90px;
+    height: 30px;
+    border: none;
+    padding: 5px;
+    margin: 10px;
+    /* width: 100%; */
+    /* border: 1px solid #8b7968; */
+    /* border-radius: 3px; */
+    background: #8b7968;
+    color: #fff;
+    cursor: pointer;
 }

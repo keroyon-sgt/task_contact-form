@@ -97,7 +97,16 @@ $(function () {
 <!-- ------------------------------------------------- -->
 <!-- エクスポート -->
         <div class="search-form__box">
-            <div class="export__button"><button class="search-form__button-export" value="export">エクスポート</button></div>
+            <div class="search-form__button">
+                <form class="search-form__button-form" action="{{$form_action}}" method="get">
+                    @csrf
+                    <input type="hidden" name="keyword" value="{{ $request->keyword }}" />
+                    <input type="hidden" name="gender" value="{{ $request->gender }}" />
+                    <input type="hidden" name="category_id" value="{{ $request->category_id }}" />
+                    <input type="hidden" name="created_at" value="{{ $request->created_at }}" />
+                    <button class="search-form__button-export" value="export" type="submit">エクスポート</button>
+                </form>
+            </div>
             <div class="pagination">{{ $contacts->links() }}</div>
         </div>
 
