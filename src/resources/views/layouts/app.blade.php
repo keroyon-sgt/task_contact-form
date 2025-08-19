@@ -63,6 +63,11 @@
     @endif -->
 </div>
 
+<?php
+echo '<br />session = ';
+var_dump(Session::getId());
+
+?>
 
     <main>
         @yield('content')

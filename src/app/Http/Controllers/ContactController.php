@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use Illuminate\Pagination\Paginator;
 use Illuminate\Http\Request;
 use App\Http\Requests\ContactRequest;

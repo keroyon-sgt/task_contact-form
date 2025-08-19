@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Pagination\Paginator;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use App\Models\Contact;
@@ -106,7 +107,7 @@ class CsvExportController extends Controller
     public function search(Request $request)
     {
         
-            $csvHeader = [
+        $csvHeader = [
             'id',
             'last_name',
             'first_name',
@@ -124,9 +125,18 @@ class CsvExportController extends Controller
             'updated_at',
         ];
 
+
+        $contacts = Contact::with('category')
+        // $contacts = Contact::query()
+            ->CategorySearch($request->category_id)
+            ->DateSearch($request->created_at)
+            ->GenderSearch($request->gender)
+            ->KeywordSearch($request->keyword)
+            ->get();
+
         $query = Contact::query();
         if ($value = $request->category_id) {
-            $query->where('category_id', $value)->get();
+            $query->where('category_id', $value);
 
 // echo '<br /><br />value(category_id) = ';
 // var_dump($value);
@@ -135,7 +145,7 @@ class CsvExportController extends Controller
 
         }
         if ($value = $request->gender) {
-            $query->where('gender', $value)->get();
+            $query->where('gender', $value);
 
 // echo '<br /><br />value(g) = ';
 // var_dump($value);
@@ -144,7 +154,8 @@ class CsvExportController extends Controller
 
         }
         if ($value = $request->created_at) {
-            $query->where('created_at', $value.'%')->get();
+            $query->where('created_at', $value.'%');
+
 
 // echo '<br /><br />value(c) = ';
 // var_dump($value);
@@ -157,7 +168,7 @@ class CsvExportController extends Controller
                 ->orWhere('detail', 'LIKE', "%{$value}%")
                 ->orWhere('email', 'LIKE', "%{$value}%")
                 ->orWhere('last_name', 'LIKE', "%{$value}%")
-                ->orWhere('first_name', 'LIKE', "%{$value}%")->get();
+                ->orWhere('first_name', 'LIKE', "%{$value}%");
 
 // echo '<br /><br />value(k) = ';
 // var_dump($value);
@@ -168,11 +179,18 @@ class CsvExportController extends Controller
         }
 
 
-        // $contacts = $query->paginate()->withQueryString();
-        $contacts = $query;
+        // $contacts = $query->paginate(100)->withQueryString();
+        $contacts = $query->paginate(0)->withQueryString();
 
-        $contacts = $contacts->toArray();
+// echo '<br /><br />contacts = ';
+// var_dump($contacts);
+
+        // $contacts = $contacts->toArray();
         // $contacts = $contacts->all();
+
+// echo '<br /><br />contacts = ';
+// var_dump($contacts);
+
 
 
         $categories = Category::all();
@@ -220,9 +238,9 @@ class CsvExportController extends Controller
 
         }
 
-echo '<br /><br />csvData = ';
-var_dump($csvData);
-exit;
+// echo '<br /><br />csvData = ';
+// var_dump($csvData);
+// exit;
 
 
         $response = new StreamedResponse(function () use ($csvHeader, $csvData) {
